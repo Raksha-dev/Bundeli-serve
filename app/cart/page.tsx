@@ -8,12 +8,13 @@ import {
   addItem,
   clearCart,
 } from "@/store/cartSlice";
+import { selectUser } from "@/store/authSlice";
 import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingBag, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { selectUser } from "@/store/authSlice";
+import { supabase } from "@/lib/supabase";
 
 const DELIVERY_FEE = 30;
 
@@ -29,6 +30,7 @@ export default function CartPage() {
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [placing, setPlacing] = useState(false);
 
   const grandTotal = total + DELIVERY_FEE;
 
@@ -43,7 +45,7 @@ export default function CartPage() {
     return e;
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!user) {
       router.push("/auth?redirect=/cart");
       return;
@@ -53,6 +55,37 @@ export default function CartPage() {
       setErrors(e);
       return;
     }
+
+    setPlacing(true);
+
+    const { error } = await supabase.from("orders").insert({
+      user_id: user.id,
+      user_email: user.email,
+      restaurant_id: items[0].restaurantId,
+      restaurant_name: items[0].restaurantName,
+      items: items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        price: i.price,
+        quantity: i.quantity,
+        isVeg: i.isVeg,
+      })),
+      customer_name: name,
+      phone,
+      address,
+      pincode,
+      subtotal: total,
+      delivery_fee: DELIVERY_FEE,
+      total: grandTotal,
+      status: "pending",
+    });
+
+    if (error) {
+      setErrors({ submit: "Failed to place order. Please try again." });
+      setPlacing(false);
+      return;
+    }
+
     dispatch(clearCart());
     router.push("/order-confirmed");
   };
@@ -307,12 +340,22 @@ export default function CartPage() {
             </div>
           )}
 
+          {/* Submit error */}
+          {errors.submit && (
+            <p className="text-red-500 text-sm text-center">{errors.submit}</p>
+          )}
+
           {/* CTA */}
           <button
             onClick={handlePlaceOrder}
-            className="w-full bg-[#D4380D] hover:bg-[#B83209] active:scale-[0.98] text-white py-4 rounded-2xl font-semibold text-base shadow-lg shadow-red-200 transition-all duration-200"
+            disabled={placing}
+            className="w-full bg-[#D4380D] hover:bg-[#B83209] disabled:bg-amber-200 active:scale-[0.98] text-white py-4 rounded-2xl font-semibold text-base shadow-lg shadow-red-200 transition-all duration-200"
           >
-            {user ? `Place Order · ₹${grandTotal}` : "Login to Place Order"}
+            {placing
+              ? "Placing Order..."
+              : user
+              ? `Place Order · ₹${grandTotal}`
+              : "Login to Place Order"}
           </button>
           {user && (
             <p className="text-center text-xs text-[#8C6F5A]">

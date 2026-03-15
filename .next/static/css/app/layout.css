@@ -636,6 +636,9 @@ video {
 .mt-10{
   margin-top: 2.5rem;
 }
+.ml-2{
+  margin-left: 0.5rem;
+}
 .line-clamp-2{
   overflow: hidden;
   display: -webkit-box;
@@ -645,11 +648,17 @@ video {
 .block{
   display: block;
 }
+.inline-block{
+  display: inline-block;
+}
 .flex{
   display: flex;
 }
 .inline-flex{
   display: inline-flex;
+}
+.table{
+  display: table;
 }
 .grid{
   display: grid;
@@ -702,6 +711,9 @@ video {
 .h-10{
   height: 2.5rem;
 }
+.h-2{
+  height: 0.5rem;
+}
 .min-h-\[70vh\]{
   min-height: 70vh;
 }
@@ -752,6 +764,9 @@ video {
 }
 .w-10{
   width: 2.5rem;
+}
+.w-2{
+  width: 0.5rem;
 }
 .min-w-0{
   min-width: 0px;
@@ -865,6 +880,15 @@ video {
 .animate-spin{
   animation: spin 1s linear infinite;
 }
+@keyframes pulse{
+
+  50%{
+    opacity: .5;
+  }
+}
+.animate-pulse{
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 .cursor-pointer{
   cursor: pointer;
 }
@@ -874,11 +898,17 @@ video {
 .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .flex-col{
   flex-direction: column;
 }
 .flex-wrap{
   flex-wrap: wrap;
+}
+.items-start{
+  align-items: flex-start;
 }
 .items-center{
   align-items: center;
@@ -1013,8 +1043,19 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(254 202 202 / var(--tw-border-opacity, 1));
 }
+.border-amber-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(251 191 36 / var(--tw-border-opacity, 1));
+}
+.border-white\/50{
+  border-color: rgb(255 255 255 / 0.5);
+}
 .border-t-transparent{
   border-top-color: transparent;
+}
+.border-t-white{
+  --tw-border-opacity: 1;
+  border-top-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
 .bg-\[\#D4380D\]{
   --tw-bg-opacity: 1;
@@ -1085,6 +1126,22 @@ video {
 .bg-red-50{
   --tw-bg-opacity: 1;
   background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+.bg-blue-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
+}
+.bg-green-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
+}
+.bg-purple-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity, 1));
+}
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
 }
 .bg-gradient-to-br{
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
@@ -1238,6 +1295,10 @@ video {
 .py-12{
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+.px-2\.5{
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 .pb-1{
   padding-bottom: 0.25rem;
@@ -1430,6 +1491,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity, 1));
 }
+.text-amber-700{
+  --tw-text-opacity: 1;
+  color: rgb(180 83 9 / var(--tw-text-opacity, 1));
+}
 .underline{
   text-decoration-line: underline;
 }
@@ -1495,6 +1560,10 @@ video {
 }
 .shadow-red-100{
   --tw-shadow-color: #fee2e2;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+.shadow-amber-100{
+  --tw-shadow-color: #fef3c7;
   --tw-shadow: var(--tw-shadow-colored);
 }
 .blur-3xl{
@@ -1679,6 +1748,22 @@ body::before {
   --tw-bg-opacity: 1;
   background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
 }
+.hover\:bg-blue-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
+}
+.hover\:bg-green-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
+}
+.hover\:bg-purple-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(126 34 206 / var(--tw-bg-opacity, 1));
+}
+.hover\:bg-red-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+}
 .hover\:text-red-600:hover{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
@@ -1725,6 +1810,9 @@ body::before {
   --tw-bg-opacity: 1;
   background-color: rgb(253 230 138 / var(--tw-bg-opacity, 1));
 }
+.disabled\:opacity-50:disabled{
+  opacity: 0.5;
+}
 @media (min-width: 640px){
 
   .sm\:block{
@@ -1741,6 +1829,10 @@ body::before {
 
   .sm\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .sm\:flex-row{
